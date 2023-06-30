@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config({path: '.env.local'})
 // const Book = require('./models/Book');
 const User = require('./models/User');
 
-mongoose.connect("mongodb+srv://archi974:admin@vincentkbidi.u6iqx.mongodb.net/book-notation?retryWrites=true&w=majority", {
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_CLUSTER}.mongodb.net/book-notation?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
