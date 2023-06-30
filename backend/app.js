@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config({path: '.env.local'})
+const userController = require('./controllers/userController');
 // const Book = require('./models/Book');
-const User = require('./models/User');
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_CLUSTER}.mongodb.net/book-notation?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -25,14 +25,6 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.post('/api/auth/signup', (req, res) => {
-    const user = new User({
-        email: req.body.email,
-        password: req.body.password
-    });
-    user.save()
-    .then(() => res.status(201).json({message: 'registered user'}))
-    .catch((error) => res.status(400).json({message: "Error with post sign-up : " + error}))
-})
+app.post('/api/auth/signup', userController.createUser);
 
 module.exports = app;
