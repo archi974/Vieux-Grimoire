@@ -26,5 +26,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.post('/api/auth/signup', userController.createUser);
+app.post('/api/auth/login', userController.loginUser);
 
 module.exports = app;
