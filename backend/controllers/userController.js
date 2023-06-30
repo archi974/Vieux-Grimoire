@@ -6,8 +6,9 @@ dotenv.config({ path: '.env.local' })
 
 exports.createUser = (req, res) => {
     const { email, password } = req.body;
+    const bcryptSalt = 10;
 
-    bcrypt.hash(password, 10, (err, hashedPassword) => {
+    bcrypt.hash(password, bcryptSalt, (err, hashedPassword) => {
         if (err) {
             res.status(500).json({ message: 'Internal Server Error' });
             return;
