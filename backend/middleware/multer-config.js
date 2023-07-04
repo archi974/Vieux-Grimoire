@@ -4,7 +4,7 @@ const multer = require('multer');
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         // Spécifiez le répertoire de destination où les images seront stockées
-        callback(null, 'images');
+        callback(null, 'assets');
     },
     filename: (req, file, callback) => {
         // Retire les espaces dans le nom du fichier pour le récupérer
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         // Utilisez l'extension d'origine de l'image
         const ext = file.originalname.split('.').pop();
-        callback(null, name + '-' + uniqueSuffix + '.' + ext);
+        callback(null, name.split('.')[0] + '-' + uniqueSuffix + '.' + ext);
     },
 });
 
