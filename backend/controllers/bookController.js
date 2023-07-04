@@ -1,17 +1,12 @@
 const Book = require('../models/Book');
 
 exports.createBook = (req, res) => {
-    
-    const { userId, title, author, year, genre } = req.body;
-    const imageUrl = req.file.path;
-    
+    const bookObject = JSON.parse(req.body.book);
+
     const book = new Book({
-        userId,
-        title,
-        author,
-        imageUrl,
-        year,
-        genre,
+        ...bookObject,
+        userId: req.auth.userId,
+        imageUrl: `${req.protocol}://${req.get("host")}/${req.file.path}`,
         ratings: [],
         averageRating: 0
     });
