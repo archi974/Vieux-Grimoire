@@ -48,20 +48,22 @@ exports.getBestThreeBook = (req, res) => {
 exports.deleteOneBook = (req, res) => {
     const bookId = req.params.id;
 
-    Book.deleteOne({ _id: bookId })
-        .then(deletedBook => {
-            if (deletedBook) {
-                const imagePath = deletedBook.imageUrl;
-                fs.unlink(imagePath, err => {
-                    if (err) {
-                        console.error(err);
-                    }
-                });
-                res.status(200).json({ message: 'Livre supprimé avec succès.' });
-            } else {
-                // Aucun livre trouvé avec l'ID spécifié
-                res.status(404).json({ message: 'Aucun livre trouvé avec cet ID.' });
+    Book.findOne({ _id: bookId })
+        .then(book => {
+            if (!book) {
+                return res.status(404).json({ message: 'Aucun livre trouvé avec cet ID.' });
             }
+
+            const imagePath = book.imageUrl.split('/assets/')[1];
+            fs.unlink(`assets/${imagePath}`, () => {
+                Book.deleteOne({ _id: bookId })
+                .then(() => {
+                    res.status(200).json({ message: 'Livre supprimé avec succès.' });
+                })
+                .catch(err => {
+                    res.status(500).json({ message: 'Une erreur est survenue lors de la suppression du livre.', err });
+                });
+            });
         })
         .catch(error => {
             res.status(500).json({ message: 'Une erreur est survenue lors de la suppression du livre.', error });
