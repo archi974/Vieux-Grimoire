@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config({path: '.env.local'})
+const path = require('path');
 
 const userController = require('./controllers/userController');
 const bookController = require('./controllers/bookController');
@@ -31,5 +32,13 @@ app.use(express.json());
 app.post('/api/auth/signup', userController.createUser);
 app.post('/api/auth/login', userController.loginUser);
 app.post('/api/books', auth, multerConfig, bookController.createBook);
+app.get('/api/books', bookController.readAllBook);
+app.get('/api/books/bestrating', bookController.getBestThreeBook);
+app.get('/api/books/:id', bookController.readOneBook);
+app.put('/api/books/:id', bookController.updateOneBook);
+app.delete('/api/books/:id', bookController.deleteOneBook);
+app.post('/api/books/:id/rating', bookController.addRatingBook);
+
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 module.exports = app;

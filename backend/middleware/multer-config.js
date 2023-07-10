@@ -1,5 +1,11 @@
 const multer = require('multer');
 
+const MIME_TYPES = {
+    'image/jpg': 'jpg',
+    'image/jpeg': 'jpg',
+    'image/png': 'png',
+    'image/webp': 'webp'
+  };
 // Configuration du stockage pour les images
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -12,7 +18,7 @@ const storage = multer.diskStorage({
         // Générez un nom de fichier unique pour l'image téléchargée (par exemple, un horodatage)
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         // Utilisez l'extension d'origine de l'image
-        const ext = file.originalname.split('.').pop();
+        const ext = MIME_TYPES[file.mimetype];
         callback(null, name.split('.')[0] + '-' + uniqueSuffix + '.' + ext);
     },
 });
