@@ -35,7 +35,7 @@ app.post('/api/books', auth, multerConfig, bookController.createBook);
 app.get('/api/books', bookController.readAllBook);
 app.get('/api/books/bestrating', bookController.getBestThreeBook);
 app.get('/api/books/:id', bookController.readOneBook);
-app.put('/api/books/:id', bookController.updateOneBook);
+app.put('/api/books/:id', auth, multerConfig, bookController.updateOneBook);
 app.delete('/api/books/:id', bookController.deleteOneBook);
 app.post('/api/books/:id/rating', bookController.addRatingBook);
 
