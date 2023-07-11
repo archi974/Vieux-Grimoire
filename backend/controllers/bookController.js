@@ -4,8 +4,15 @@ const fs = require('fs');
 exports.createBook = (req, res) => {
     const bookObject = JSON.parse(req.body.book);
 
+    const yearRegex = /^(18[0-9]{2}|19[0-9]{2}|20[0-9]{2}|2100)$/; // année entre 868 et 2100
+    const year = bookObject.year.toString();
+    if (!yearRegex.test(year)) {
+        return res.status(400).json({ message: "L'année doit être un nombre de 4 chiffres." });
+    }
+
     const book = new Book({
         ...bookObject,
+        year: parseInt(year, 10),
         imageUrl: `${req.protocol}://${req.get("host")}/${req.file.path}`
     });
 
@@ -46,34 +53,30 @@ exports.getBestThreeBook = (req, res) => {
 }
 
 exports.updateOneBook = (req, res) => {
-    const bookObject = req.file
-      ? {
-          ...JSON.parse(req.body.book),
-          imageUrl: `${req.protocol}://${req.get("host")}/${req.file.path}`,
-        }
-      : {
-          ...req.body,
-        };
+    const bookObject = req.file ?
+        {
+            ...JSON.parse(req.body.book),
+            imageUrl: `${req.protocol}://${req.get("host")}/${req.file.path}`,
+        } : { ...req.body, };
     Book.findOne({ _id: req.params.id })
-      .then((book) => {
-        if (book.userId != req.auth.userId) {
-          return res.status(404).json({ message: "Livre non trouvé." });
-        } 
-        const imagePath = book.imageUrl.split('/assets/')[1];
-        console.log(imagePath);
-        fs.unlink(`assets/${imagePath}`, () => {
-          Book.updateOne({ _id: req.params.id }, { ...bookObject, _id: req.params.id })
-          .then(res.status(200).json({ message: 'Livre modifié! ' }))
-          .catch(error => res.status(400).json({ error }));
+        .then((book) => {
+            if (book.userId != req.auth.userId) {
+                return res.status(404).json({ message: "Livre non trouvé." });
+            }
+            const imagePath = book.imageUrl.split('/assets/')[1];
+            fs.unlink(`assets/${imagePath}`, () => {
+                Book.updateOne({ _id: req.params.id }, { ...bookObject, _id: req.params.id })
+                    .then(res.status(200).json({ message: 'Livre modifié! ' }))
+                    .catch(error => res.status(400).json({ error }));
+            })
         })
-      })
-      .catch((error) =>
-        res.status(500).json({
-          message: "Une erreur est survenue lors de la mise à jour du livre.",
-          error,
-        })
-      );
-  };
+        .catch((error) =>
+            res.status(500).json({
+                message: "Une erreur est survenue lors de la mise à jour du livre.",
+                error,
+            })
+        );
+};
 
 exports.deleteOneBook = (req, res) => {
     const bookId = req.params.id;
@@ -87,12 +90,12 @@ exports.deleteOneBook = (req, res) => {
             const imagePath = book.imageUrl.split('/assets/')[1];
             fs.unlink(`assets/${imagePath}`, () => {
                 Book.deleteOne({ _id: bookId })
-                .then(() => {
-                    res.status(200).json({ message: 'Livre supprimé avec succès.' });
-                })
-                .catch(err => {
-                    res.status(500).json({ message: 'Une erreur est survenue lors de la suppression du livre.', err });
-                });
+                    .then(() => {
+                        res.status(200).json({ message: 'Livre supprimé avec succès.' });
+                    })
+                    .catch(err => {
+                        res.status(500).json({ message: 'Une erreur est survenue lors de la suppression du livre.', err });
+                    });
             });
         })
         .catch(error => {
