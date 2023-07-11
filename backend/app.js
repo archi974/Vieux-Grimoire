@@ -6,7 +6,7 @@ const path = require('path');
 
 const userController = require('./controllers/userController');
 const bookController = require('./controllers/bookController');
-const multerConfig = require('./middleware/multer-config');
+const { upload, optimizedImg } = require('./middleware/multer-config');
 const auth = require('./middleware/auth');
 const verification = require('./middleware/validator');
 
@@ -32,11 +32,11 @@ app.use(express.json());
 
 app.post('/api/auth/signup', verification.validateUser, userController.createUser);
 app.post('/api/auth/login', userController.loginUser);
-app.post('/api/books', auth, multerConfig, bookController.createBook);
+app.post('/api/books', auth, upload, optimizedImg, bookController.createBook);
 app.get('/api/books', bookController.readAllBook);
 app.get('/api/books/bestrating', bookController.getBestThreeBook);
 app.get('/api/books/:id', bookController.readOneBook);
-app.put('/api/books/:id', auth, multerConfig, bookController.updateOneBook);
+app.put('/api/books/:id', auth, upload, optimizedImg, bookController.updateOneBook);
 app.delete('/api/books/:id', bookController.deleteOneBook);
 app.post('/api/books/:id/rating', bookController.addRatingBook);
 
