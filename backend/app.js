@@ -8,6 +8,7 @@ const userController = require('./controllers/userController');
 const bookController = require('./controllers/bookController');
 const multerConfig = require('./middleware/multer-config');
 const auth = require('./middleware/auth');
+const verification = require('./middleware/validator');
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWD}@${process.env.DB_CLUSTER}.mongodb.net/book-notation?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.post('/api/auth/signup', userController.createUser);
+app.post('/api/auth/signup', verification.validateUser, userController.createUser);
 app.post('/api/auth/login', userController.loginUser);
 app.post('/api/books', auth, multerConfig, bookController.createBook);
 app.get('/api/books', bookController.readAllBook);
