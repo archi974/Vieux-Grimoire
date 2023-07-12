@@ -9,11 +9,10 @@ exports.createBook = (req, res) => {
     if (!yearRegex.test(year)) {
         return res.status(400).json({ message: "L'année doit être un nombre de 4 chiffres entre 1800 et 2100." });
     }
-
     const book = new Book({
         ...bookObject,
         year: parseInt(year, 10),
-        imageUrl: `${req.protocol}://${req.get("host")}/${req.file.path}`
+        imageUrl: `${req.protocol}://${req.get("host")}/assets/${req.file.filename}`
     });
 
     book.save()
@@ -56,7 +55,7 @@ exports.updateOneBook = (req, res) => {
     const bookObject = req.file ?
         {
             ...JSON.parse(req.body.book),
-            imageUrl: `${req.protocol}://${req.get("host")}/${req.file.path}`,
+            imageUrl: `${req.protocol}://${req.get("host")}/assets/${req.file.filename}`,
         } : { ...req.body, };
     Book.findOne({ _id: req.params.id })
         .then((book) => {
