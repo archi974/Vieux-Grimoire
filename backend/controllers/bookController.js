@@ -62,6 +62,9 @@ exports.updateOneBook = (req, res) => {
             if (book.userId != req.auth.userId) {
                 return res.status(404).json({ message: "Livre non trouvé." });
             }
+            if (book.userId !== req.auth.userId) {
+                return res.status(403).json({ message: "Vous n'avez pas l'autorisation de modifier ce livre." });
+            }
             const imagePath = book.imageUrl.split('/assets/')[1];
             fs.unlink(`assets/${imagePath}`, () => {
                 Book.updateOne({ _id: req.params.id }, { ...bookObject, _id: req.params.id })
@@ -123,10 +126,11 @@ exports.addRatingBook = (req, res) => {
                 (acc, rating) => acc + rating.grade,
                 0
             );
-            const averageRating = totalGrade / totalRatings;
+            // Arrondir la moyenne à une décimale
+            const roundedRating = Math.round(totalGrade / totalRatings);
 
             // Mettre à jour la moyenne des notes dans le livre
-            updatedBook.averageRating = averageRating;
+            updatedBook.averageRating = roundedRating;
 
             // Sauvegarder les modifications du livre
             updatedBook.save()

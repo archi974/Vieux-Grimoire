@@ -33,7 +33,7 @@ const optimizedImg = (req, res, next) => {
     const filename = `${originalname.split('.')[0]}_${uniqueSuffix}.webp`;
 
     sharp(req.file.buffer)
-        .resize(400, 500)
+        .resize(400, 500, { fit: 'inside' })
         .webp({ quality: 80 })
         .toFile(`assets/${filename}`)
         .then(() => {
