@@ -17,12 +17,12 @@ const storage = multer.memoryStorage({
         const ext = MIME_TYPES[file.mimetype];
         callback(null, name.split('.')[0] + Date.now() + '.' + ext);
     }
-}); // Utilisez multer.memoryStorage() pour stocker l'image en mémoire
+}); // Utilisez multer.memoryStorage() pour stocker l'image en mémoire RAM
 
 // Créez l'objet Multer en utilisant la configuration de stockage pour une seule image
 const upload = multer({ storage }).single('image');
 
-// Middleware pour redimensionner, compresser et convertir l'image
+// Middleware pour redimensionner, compresser et convertir l'image et l'enregistrer sur le disque
 const optimizedImg = (req, res, next) => {
     if (!req.file) {
         return next();
