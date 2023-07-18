@@ -51,15 +51,17 @@ Ce document détaille les besoins de l’API requis pour le bon fonctionnement d
 | DELETE | /api/books/:id | Requis | - | { message: string } | Supprime le livre avec l'_id fourni ainsi que l’image associée. |
 | POST | /api/books/:id/rating | Requis | { userId: string, rating: number } | Single book | Définit la note pour le user ID fourni. La note doit être comprise entre 0 et 5. L'ID de l'utilisateur et la note doivent être ajoutés au tableau "rating" afin de ne pas laisser un utilisateur noter deux fois le même livre. Il n’est pas possible de modifier une note. La note moyenne "averageRating" doit être tenue à jour, et le livre renvoyé en réponse de la requête. |
 
-⛔ API Errors
+## ⛔ API Errors
+
 Les erreurs éventuelles doivent être renvoyées telles qu'elles sont produites, sans modification ni ajout. Si
 nécessaire, utilisez une nouvelle Error().
 
-⛔ API Routes
+
+## 🔃 API Routes
 
 Toutes les routes pour les livres doivent disposer d'une autorisation (le token est envoyé par le front-end avec l'en-tête d'autorisation "bearer"»). Avant qu’un utilisateur puisse apporter des modifications à la route livre (book), le code doit vérifier si le user ID actuel correspond au user ID du livre. Si le user ID ne correspond pas, renvoyer « 403: unauthorized request ». Cela permet de s'assurer que seul le propriétaire d’un livre puisse apporter des modifications à celui-ci.
 
-Sécurité
+## 🛡 Sécurité
 
 - Le mot de passe de l'utilisateur doit être haché.
 - L'authentification doit être renforcée sur toutes les routes livre (book) requises.
@@ -96,7 +98,9 @@ Sécurité
   - Ouvrir un nouveau terminal
   - Accéder au dossier frontend `cd frontend`
   - Installer les dépendances `npm i`
-  - Lancer le serveur front `npm start` ⚠Toujours lancer le serveur backend avant le frontend pour éviter les erreurs de récupération de donnée.
+  - Lancer le serveur front `npm start`
+
+*⚠ Toujours lancer le serveur backend avant le frontend pour éviter les erreurs de récupération de donnée.*
 
 ### Utilisation
 
@@ -111,6 +115,15 @@ Sécurité
 ### Pour plus de sécurité
 
 - Il serais conseiller une fois en production d'utilisé PM2 à la place de nodemon pour plus de sécurité par exemple pour la mémoire RAM que j'utilise pour stocker provisoirement une image pour l'optimiser, cela évite les attaques de type Denial of Service (DoS).
+
+## Aperçu finale
+
+Etant un projet en backend, il y a peu de visuel mais on peu aperçevoir les données récupérer si on les compare à celle stocker dans la base de donnée.
+
+![Base de donnée](https://cdn.discordapp.com/attachments/1081227920770596865/1130757698221256754/Capture_decran_2023-07-18_a_08.55.44.png)
+![Page d'accueil](https://cdn.discordapp.com/attachments/1081227920770596865/1130757696342208572/Capture_decran_2023-07-18_a_08.52.58.png)
+![Page description d'un livre](https://cdn.discordapp.com/attachments/1081227920770596865/1130757696790990949/Capture_decran_2023-07-18_a_08.53.22.png)
+![Page d'ajout de livre](https://cdn.discordapp.com/attachments/1081227920770596865/1130757697906688050/Capture_decran_2023-07-18_a_08.53.55.png)
 
 ## Droits d’auteurs et informations sur la licence.
 
