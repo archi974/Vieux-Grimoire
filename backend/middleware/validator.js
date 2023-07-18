@@ -4,12 +4,10 @@ exports.validateUser = (req, res, next) => {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     
     if (!emailRegex.test(email)) {
-        res.status(400).json({ message: 'Email invalide' });
-        return;
+        return res.status(400).json({ message: 'Email invalide' });
     }
     if (!passwordRegex.test(password)) {
-        res.status(400).json({ message: 'Mot de passe invalide' });
-        return;
+        return res.status(400).json({ message: 'Mot de passe invalide' });
     }
     next();
 }
