@@ -69,9 +69,17 @@ Toutes les routes pour les livres doivent disposer d'une autorisation (le token 
 - La sécurité de la base de données MongoDB (à partir d'un service tel que MongoDB Atlas) ne doit pas empêcher l'application de se lancer sur la machine d'un utilisateur.
 - Les erreurs issues de la base de données doivent être remontées.
 
-## Instruction d'installation et d'utilisation :
+## Etape de récupération et lancement du projet
 
-### Installation
+- Récupérer le dépôt de GitHub `git clone git@github.com:archi974/Vieux-Grimoire.git`.
+- Ouvrir un terminal et accéder au dossier back `cd backend`
+- Installer les dépendances `npm i`
+- Lancer le serveur `npm start`
+- Ouvrir un autre terminal et accéder au dossier front `cd frontend`
+- Installer les dépendances `npm i`
+- Lancer le serveur `npm start`
+
+## Etape de création du projet
 
 - Installer [Visual Studio Code](https://code.visualstudio.com/).
 - Avoir un terminal en bash.
@@ -104,16 +112,6 @@ Toutes les routes pour les livres doivent disposer d'une autorisation (le token 
   - Installer les dépendances `npm i`
   *⚠ Toujours lancer le serveur backend avant le frontend pour éviter les erreurs de récupération de donnée.*
   - Lancer le serveur front `npm start`
-
-### Utilisation
-
-- Récupérer le dépôt de GitHub `git clone git@github.com:archi974/Vieux-Grimoire.git`.
-- Ouvrir un terminal et accéder au dossier back `cd backend`
-- Installer les dépendances `npm i`
-- Lancer le serveur `npm start`
-- Ouvrir un autre terminal et accéder au dossier front `cd frontend`
-- Installer les dépendances `npm i`
-- Lancer le serveur `npm start`
 
 ### Pour plus de sécurité
 
