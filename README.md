@@ -77,6 +77,18 @@ Toutes les routes pour les livres doivent disposer d'une autorisation (le token 
 - Avoir un terminal en bash.
 - Crée un dépôt GitHub.
 - Récupérer la clé SSH du dépôt.
+- Récupérer le dépôt en local `git clone lien-ssh nom-du-projet`.
+- Entrer dans le dossier `cd nom-du-projet`.
+  
+- Pour le backend :
+  - Crée un dossier backend `mkdir backend`
+  - Accéder au dossier backend `cd backend`
+  - Pour crée le package.json qui contiendra les dépendances on doit faire `npm init`
+  - Tout valider (ou possibilité de changer de nom de projet)
+  - Faire un .gitignore et y écrire node_module voir récupérer dans le frontend le contenu du .gitignore
+  - Créer le fichier JS correspondant au package.json (ex: index.js)
+  - Le reste se fait manuellement
+
 - Pour la base de donnée :
   - Ce connecté sur [MongoDB Atlas](https://www.mongodb.com/atlas/database)
   - Crée un projet sur MongoDB Atlas
@@ -86,21 +98,12 @@ Toutes les routes pour les livres doivent disposer d'une autorisation (le token 
   - Changer l'uri du cluster en ajoutant le nom de la base de donnée `mongodb+srv://<userDB>:<passwordDB>@<clusterDB>.mongodb.net/?retryWrites=true&w=majority`
   - Data access : définir un utilisateur avec les droits d'écriture et de lecture
 
-- Dans le terminal :
-  - Récupérer le dépôt en local `git clone lien-ssh nom-du-projet`.
-  - Entrer dans le dossier `cd nom-du-projet`.
-  - Crée un dossier backend `mkdir backend`
-  - Entrer dans le dossier `cd backend`.
-  - Insérer une base de paquet JSON package.json
-  - Installer les dépendances express/nodemon/etc `npm i express`
-
 - Pour le frontend :
   - Ouvrir un nouveau terminal
   - Accéder au dossier frontend `cd frontend`
   - Installer les dépendances `npm i`
+  *⚠ Toujours lancer le serveur backend avant le frontend pour éviter les erreurs de récupération de donnée.*
   - Lancer le serveur front `npm start`
-
-*⚠ Toujours lancer le serveur backend avant le frontend pour éviter les erreurs de récupération de donnée.*
 
 ### Utilisation
 
