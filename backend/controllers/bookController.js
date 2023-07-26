@@ -4,10 +4,10 @@ const fs = require('fs');
 exports.createBook = (req, res) => {
     const bookObject = JSON.parse(req.body.book);
 
-    const yearRegex = /^(18[0-9]{2}|19[0-9]{2}|20[0-9]{2}|2100)$/;
+    const yearRegex = /^(?:2[\d]{3}|1[\d]{3}|[\d]{3}|[\d]{2}|[\d]{1})$/;
     const year = bookObject.year.toString();
     if (!yearRegex.test(year)) {
-        return res.status(400).json({ message: "L'année doit être un nombre de 4 chiffres entre 1800 et 2100." });
+        return res.status(400).json({ message: "L'année doit être un nombre de 4 chiffres entre 0 et 2999." });
     }
     const book = new Book({
         ...bookObject,
