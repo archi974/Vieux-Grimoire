@@ -106,6 +106,10 @@ exports.deleteOneBook = (req, res) => {
 }
 
 exports.addRatingBook = (req, res) => {
+    const user = req.body.userId;
+    if (!req.auth || user !== req.auth.userId) {
+        return res.status(401).json({ message: 'Un ou plusieurs utilisateurs sont inexistant' })
+    }
     const ratingObject = req.body;
     ratingObject.grade = ratingObject.rating;
     delete ratingObject.rating;
