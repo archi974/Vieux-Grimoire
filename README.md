@@ -78,6 +78,7 @@ Toutes les routes pour les livres doivent disposer d'une autorisation (le token 
 - Ouvrir un autre terminal et accéder au dossier front `cd frontend`
 - Installer les dépendances `npm i`
 - Lancer le serveur `npm start`
+- Crée un fichier .env.local avec les variables `DB_USER`, `DB_PASSWD`, `DB_CLUSTER`, `JWT_SECRET` avec leurs valeur respective. (`JWT_SECRET` est une valeur personnalisé)
 
 ## Etape de création du projet
 
@@ -96,6 +97,7 @@ Toutes les routes pour les livres doivent disposer d'une autorisation (le token 
   - Faire un .gitignore et y écrire node_module voir récupérer dans le frontend le contenu du .gitignore
   - Créer le fichier JS correspondant au package.json (ex: index.js)
   - Le reste se fait manuellement
+  - Crée un fichier .env.local avec les variables `DB_USER`, `DB_PASSWD`, `DB_CLUSTER`, `JWT_SECRET` avec leurs valeur respective.
 
 - Pour la base de donnée :
   - Ce connecté sur [MongoDB Atlas](https://www.mongodb.com/atlas/database)
